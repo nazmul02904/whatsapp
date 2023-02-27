@@ -6,7 +6,7 @@ const ToggleBtn = () => {
   return (
     <header>
       <Button onClick={toggleColorMode} pos="fixed" top={0} right={0} m="1rem">
-        {colorMode === "light" ? <SunIcon /> : <MoonIcon />}
+        {colorMode !== "light" ? <SunIcon /> : <MoonIcon />}
       </Button>
     </header>
   );
