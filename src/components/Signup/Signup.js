@@ -1,3 +1,4 @@
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
@@ -12,8 +13,9 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
-const Login = () => {
+const SignUp = () => {
   const navigate = useNavigate();
+
   const { getFieldProps, handleSubmit, resetForm, errors, touched } = useFormik(
     {
       initialValues: {
@@ -46,7 +48,7 @@ const Login = () => {
       spacing="1rem"
       onSubmit={handleSubmit}
     >
-      <Heading>Log In</Heading>
+      <Heading>Sign Up</Heading>
       <FormControl isInvalid={errors.username && touched.username}>
         <FormLabel>UserName</FormLabel>
         <Input
@@ -72,12 +74,14 @@ const Login = () => {
       </FormControl>
       <ButtonGroup pt={"1rem"}>
         <Button colorScheme={"teal"} type="submit">
-          Log In
+          Create Account
         </Button>
-        <Button onClick={() => navigate("/register")}>Create Account</Button>
+        <Button onClick={() => navigate("/")} leftIcon={<ArrowBackIcon />}>
+          Back
+        </Button>
       </ButtonGroup>
     </VStack>
   );
 };
 
-export default Login;
+export default SignUp;
