@@ -16,7 +16,7 @@ const io = new Server(httpServer, {
 app.use(helmet());
 app.use(express.json());
 
-app.use(authRouter)
+app.use("/auth", authRouter)
 
 io.on("connection", (socket) => {
   console.log(socket.id);

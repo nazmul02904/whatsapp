@@ -1,4 +1,4 @@
-import Yup from "yup"
+import Yup from "yup";
 
 const formSchema = Yup.object({
   username: Yup.string()
@@ -12,9 +12,20 @@ const formSchema = Yup.object({
 });
 
 const authValidateForm = (req, res) => {
-    formSchema.validate(req.body).catch(err => {
-        console.log(err)
-    }).then(valid => console.log(valid))
+  console.log(req.body);
+  formSchema
+    .validate(req.body)
+    .catch((err) => {
+      console.log(err.errors);
+      res.status(422).send();
+    })
+    .then((valid) => {
+      if(valid){
+        console.log("its working")
+        res.send("form is working");
+
+      }
+    });
 };
 
 export default authValidateForm;
