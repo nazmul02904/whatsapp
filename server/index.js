@@ -3,6 +3,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import helmet from "helmet";
 import authRouter from "./routers/authRouter.js"
+import connectDb from "./config/db.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -13,8 +14,10 @@ const io = new Server(httpServer, {
   },
 });
 
+
 app.use(helmet());
 app.use(express.json());
+connectDb();
 
 app.use("/auth", authRouter)
 
