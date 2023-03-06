@@ -22,8 +22,6 @@ const authValidateForm = (req, res) => {
     .then((valid) => {
       if(valid){
         console.log("its working")
-        res.send("form is working");
-
       }
     });
 };
