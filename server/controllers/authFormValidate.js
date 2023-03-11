@@ -17,7 +17,7 @@ const authValidateForm = (req, res) => {
     .validate(req.body)
     .catch((err) => {
       console.log(err.errors);
-      res.status(422).send();
+      res.status(401).send();
     })
     .then((valid) => {
       if(valid){
