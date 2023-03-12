@@ -11,8 +11,10 @@ import {
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { AuthStates } from "../../utils/AuthContext";
 
 const Login = () => {
+  const { setAuth } = AuthStates();
   const navigate = useNavigate();
   const { getFieldProps, handleSubmit, resetForm, errors, touched } = useFormik(
     {
@@ -32,15 +34,18 @@ const Login = () => {
       }),
       onSubmit: (values) => {
         const vals = { ...values };
-        resetForm();
-        fetch("http://", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(vals),
-        })
+        // resetForm();
+        fetch(
+          "https://3001-nazmul02904-whatsapp-zvbi069ezfn.ws-us90.gitpod.io/auth/login",
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(vals),
+          }
+        )
           .catch((err) => {
             return;
           })
@@ -52,6 +57,8 @@ const Login = () => {
           })
           .then((data) => {
             console.log(data);
+            setAuth({ ...data });
+            navigate("/home", {replace: true});
           });
       },
     }

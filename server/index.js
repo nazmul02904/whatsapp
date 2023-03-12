@@ -4,6 +4,7 @@ import { Server } from "socket.io";
 import helmet from "helmet";
 import authRouter from "./routers/authRouter.js"
 import connectDb from "./config/db.js";
+import cors from "cors"
 
 const app = express();
 const httpServer = createServer(app);
@@ -17,6 +18,10 @@ const io = new Server(httpServer, {
 
 app.use(helmet());
 app.use(express.json());
+app.use(cors({
+  origin: "https://3000-nazmul02904-whatsapp-zvbi069ezfn.ws-us90.gitpod.io",
+  credentials: true
+}))
 connectDb();
 
 app.use("/auth", authRouter)

@@ -17,6 +17,7 @@ router.post("/login", async (req, res, nex) => {
       if (isPassMatched) {
         res.cookie("user", potentialLogin.rows[0].id).status(200).json({
           loggedIn: true,
+          user: potentialLogin.rows[0],
           message: "login successful",
         });
       } else {
@@ -53,7 +54,7 @@ router.post("/signup", async (req, res, nex) => {
       ]);
       res.cookie("user", newUser.rows[0].id).json({
         login: true,
-        username: req.body.username,
+        user: newUser.rows[0]
       });
     } else {
       res.json({
