@@ -7,14 +7,20 @@ import {
   FormLabel,
   Heading,
   Input,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { AuthStates } from "../../utils/AuthContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const { setAuth } = AuthStates();
+  const [error, setError] = useState("");
 
   const { getFieldProps, handleSubmit, resetForm, errors, touched } = useFormik(
     {
@@ -56,8 +62,12 @@ const SignUp = () => {
             return res.json();
           })
           .then((data) => {
-            console.log(data);
-            navigate("/home")
+            setAuth({ ...data });
+            if (data.message) {
+              setError(data.message);
+            } else {
+              navigate("/home", { replace: true });
+            }
           });
       },
     }
@@ -73,6 +83,12 @@ const SignUp = () => {
       onSubmit={handleSubmit}
     >
       <Heading>Sign Up</Heading>
+      if(error)
+      {
+        <Text textTransform={"capitalize"} color={"red"}>
+          {error}
+        </Text>
+      }
       <FormControl isInvalid={errors.username && touched.username}>
         <FormLabel>UserName</FormLabel>
         <Input
