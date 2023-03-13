@@ -5,6 +5,7 @@ import helmet from "helmet";
 import authRouter from "./routers/authRouter.js"
 import connectDb from "./config/db.js";
 import cors from "cors"
+import cookieParser from "cookie-parser";
 
 const app = express();
 const httpServer = createServer(app);
@@ -23,6 +24,7 @@ app.use(cors({
   credentials: true
 }))
 connectDb();
+app.use(cookieParser())
 
 app.use("/auth", authRouter)
 

@@ -4,7 +4,15 @@ import bcrypt from "bcrypt";
 
 const router = express.Router();
 
-router.post("/login", async (req, res, nex) => {
+router.route("/login").get(async(req, res, nex) => {
+  console.log(req.cookies.user);
+  if(req.cookies.user){
+    res.json({loggedIn: true, user: req.cookies.user})
+  }else{
+    res.json({loggedIn: false})
+  }
+})
+.post (async (req, res, nex) => {
     const potentialLogin = await client.query(
       `SELECT id, username, password from users u WHERE u.username=$1`,
       [req.body.username]
@@ -15,10 +23,9 @@ router.post("/login", async (req, res, nex) => {
         potentialLogin.rows[0].password
       );
       if (isPassMatched) {
-        res.cookie("user", potentialLogin.rows[0].id).status(200).json({
+        res.cookie("user", potentialLogin.rows[0]).status(200).json({
           loggedIn: true,
           user: potentialLogin.rows[0],
-          message: "login successful",
         });
       } else {
         res.json({
